@@ -5,7 +5,6 @@ Introduction to RPG
 ## Todo
 
 * Creating commands for programs
-* Embedded SQL basics
 
 ## Contents
 
@@ -19,6 +18,7 @@ Introduction to RPG
 8. RPG data-structures
 9. RPG prototypes
 10. RPG modules and programs
+11. Embedded SQL basics
 
 ## IBM i file system and the IFS 
 
@@ -582,3 +582,101 @@ CALL MYPGM
 This really should give a brief idea of how modules can be used. You may have an order entry program, where the entry module does all the display file handling, another module might do the order entry processing and another might send data to a web service.
 
 Know that you can includes modules written in any ILE language when creating programs.
+
+## RPG and Embedded SQL
+
+### How does Embedded SQL work?
+
+Embedded SQL takes your source member, scans it for the EXEC SQL operation(?) and replaces it with RPG program calls. I/some call this step the 'pre-compile' - it's what the pre-compiler does. The pre-compiler also declares a data-structure for your use in programs, and one of the subfields is SQLSTATE for example. I use SQLSTATE to check if there are any data errors or SQL errors. SQLSTATE is a character five field, and you can [find what the data means here](https://www.ibm.com/support/knowledgecenter/en/ssw_ibm_i_73/rzala/rzalaccl.htm).
+
+![](http://i.imgur.com/OmCPkD6.png)
+
+### How do I start using it?
+
+The first step is to ditch CRTBNDRPG and CRTRPGMOD. They are now useless for writing code with Embedded SQL, as you can use CRTSQLRPGI as a replacement for both of these. Also, you can start using SQLRPGLE as the extention for all your Embedded SQL RPG code.
+
+To create a regular program, you use CRTSQLRPGI with `OBJTYPE(*PGM)` as a parameter; for a module you use `OBJTYPE(*MODULE)`. This is just my opinion though, of course you can still use the other commands, but you can still compile regular RPG with this command.
+
+For this, we are going to use this SQL to create a new physical file/table. I did use STRSQL to create this table. I typed create table and used F4 to prompt the rest of the data in. LIAMALLAN1 is the library I made the PF in, but that is optional of course.
+
+```sql
+CREATE TABLE LIAMALLAN1/CUSTOMERS (
+	CUS_ID INT NOT NULL WITH DEFAULT, 
+	CUS_BAL NUMERIC (11 , 2) NOT NULL WITH DEFAULT, 
+	CUS_NAME CHAR (25) NOT NULL WITH DEFAULT, 
+	CUS_EMAIL CHAR (50) NOT NULL WITH DEFAULT
+)
+```
+
+You can optionally use UPDDTA against the PF with insert mode to add data - or you can use SQL INSERT. Note that these are all seperate statements.
+
+```sql
+INSERT INTO LIAMALLAN1/CUSTOMERS VALUES(
+	1, 
+	10.25, 
+	'Liam Barry',
+	'mrliamallan@live.co.uk'
+)
+
+INSERT INTO LIAMALLAN1/CUSTOMERS VALUES(
+	2, 
+	100.66, 
+	'Eric Jooka',
+	'ericjooka@person.com'
+)
+
+INSERT INTO LIAMALLAN1/CUSTOMERS VALUES(
+	3, 
+	1123124.12, 
+	'Emily Bae',
+	'emilybae@hello.com'
+)
+```
+
+### How do I really start using it?
+
+Now we have some data, we can really start using Embedded SQL. So, make sure you have a test source member/steamfile to put your Embedded SQL in. Embedded SQL allows any regular DB2 statement within your source, be it DELETE, UPDATE, INSERT or SELECT.
+
+As SELECT may be the most important one for beginners, we'll look at that first. As good practice, for every PF I use within Embedded SQL, I like to declare a data-structure (Dcl-DS) matching the PF fields. I also make it a template, incase I want to use it in multiple places.
+
+```
+//Template data structure matching CUSTOMERS file
+Dcl-DS CUSTOMER_Temp Qualified Template;
+  CUS_ID    Int(10);
+  CUS_BAL   Packed(11:2);
+  CUS_NAME  Char(25);
+  CUS_EMAIL Char(50);
+End-Ds;
+
+Dcl-DS CUSTOMER LikeDS(CUSTOMER_Temp);
+```
+
+Selecting one record from the file is a simple start, and useful if you're writing something like a maintainance screen.
+
+```
+Exec SQL SELECT CUS_BAL,
+                CUS_NAME
+         INTO   :Customer.CUS_BAL,
+                :Customer.CUS_NAME
+         FROM   CUSTOMERS
+         WHERE  CUS_ID = 1;
+```
+
+![](http://i.imgur.com/f8b6nAV.png)
+
+And as you can see, it's simple to get data - very easy. What if we update data on our maintainance screen? The next snippet of code sits below the previous SELECT statement that we created in our RPG.
+
+```
+//Imagine this is the change on our screen
+Customer.CUS_NAME = 'Barry James';
+
+Exec SQL UPDATE CUSTOMERS SET
+           CUS_BAL  = :Customer.CUS_BAL,
+           CUS_NAME = :Customer.CUS_NAME
+         WHERE CUS_ID = 1;
+```
+
+After we have compiled and ran this program, open STRSQL and SELECT * FROM CUSTOMERS..
+
+![](http://i.imgur.com/Setqhzh.png)
+
