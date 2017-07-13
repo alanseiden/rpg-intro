@@ -680,3 +680,69 @@ After we have compiled and ran this program, open STRSQL and SELECT * FROM CUSTO
 
 ![](http://i.imgur.com/Setqhzh.png)
 
+### Lots of data
+
+It's a need to SELECT more than one row at a time, luckily you can do this with cursors. Note, when using cursors: make sure you **close** the cursor when you've finished using it - you're causing yourself problems if you don't do this. Luckily, we declared our `CUSTOMER` data-structure so we can re-use it in our do-while.
+
+You delcare your cursor with your `SELECT` statement. The syntax is a bit like `EXEC SQL DECLARE [cursor-name] CURSOR FOR [select-statement]`.
+
+```
+Exec SQL Declare Cust_Cur Cursor FOR
+  SELECT *
+  FROM   CUSTOMERS;
+```
+
+Even after we've closed the cursor, we are able to re-open it again - but not while it's already open. The code is commented instead of seperating it into blocks.
+
+```
+Exec SQL Declare Cust_Cur Cursor FOR
+  SELECT *
+  FROM   CUSTOMERS;
+
+//Open our cursor that we defined previously.
+Exec SQL Open Cust_Cur;
+
+//'00000' = Unqualified Successful Completion
+If (SQLSTATE = '00000');
+
+  //Attemping to get the first record from
+  //CUSTOMERS into our CUSTOMER data structure.
+  Exec SQL Fetch Cust_Cur Into :CUSTOMER;
+
+  //'00000' = Unqualified Successful Completion
+  Dow (SQLSTATE = '00000');
+    //Print some data
+    printf(%Trim(Customer.CUS_NAME) + ': ' + %Char(Customer.CUS_BAL) + x'25');
+
+     //Fetch the next record
+    Exec SQL Fetch Cust_Cur Into :CUSTOMER;
+  ENDDO;
+
+ENDIF;
+
+//Close the cursor.. WE MUST CLOSE THE CURSOR
+Exec SQL Close Cust_Cur;
+```
+
+This code will loop through each record in the CUSTOMERS file and print some relevant data out. It looks something like this..
+
+![](http://i.imgur.com/B0PyBx0.png)
+
+### Deleting data
+
+There is still a lot of cursors I haven't covered.. but this is a good start. The last part I will cover is deleting data from the CUSTOMERS file. It's simple, like all over Embedded SQL statements `EXEC SQL [statement]`. There are two ways I'm going to show. The first is a hardcoded CUS_ID, the second is using Customer.CUS_ID.
+
+```
+Exec SQL DELETE FROM CUSTOMERS
+         WHERE CUS_ID = 1;
+```
+
+```
+Customer.CUS_ID = 2;
+Exec SQL DELETE FROM CUSTOMERS
+         WHERE CUS_ID = :Customer.CUS_ID;
+```
+
+The ending result would remove two records from the file.
+
+![](http://i.imgur.com/VktmscL.png)
