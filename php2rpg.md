@@ -144,7 +144,7 @@ Dcl-S bool Ind;
 Dcl-S varA Int(3) Inz(5);
 Dcl-S varb Int(3) Inz(10);
 
-bool = (varA == varB);
+bool = (varA = varB);
 bool = (varA <> varB);
 bool = (varA > varB);
 bool = (varA < varB);
