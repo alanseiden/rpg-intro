@@ -1,6 +1,6 @@
 # rpg-intro
 
-Introduction to RPG. See [this Wikipedia](https://en.wikipedia.org/wiki/IBM_RPG) page for an introduction to RPG.
+Introduction to RPG (Report Program Generator). See [this Wikipedia](https://en.wikipedia.org/wiki/IBM_RPG) page for an introduction to RPG.
 
 ## Todo
 
