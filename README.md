@@ -27,7 +27,7 @@ The two file systems we’re going to look at are
 * The 'library file system'
 * The IFS (Integrated-File-System) 
 
-The reason we’re going to look at these is because you can develop RPG in either, but their differences must be explained. Like most other operating system, you can create a simple stream file and write your code inside of this file and the compiler will do its work – this is a still a normal concept on IBM i, but most industries do not do this. 
+The reason we’re going to look at these is because you can develop RPG in either, but their differences must be explained. Like most other operating system, you can create a simple stream file and write your code inside of this file and the compiler will do its work – this is still a normal concept on IBM i, but most industries do not do this. 
 
 You’ll find that most IBM i shops will develop in something called ‘source members’. A ‘source member’ is a DB2 concept. A table within DB2 can contain multiple members which share the same columns, but there are special tables called ‘source physical files’ (SPF for short). ‘Physical file’ (PF for short) is a legacy name for tables, but the name will continue to live on while people develop in source members. A physical file is a type of object and all objects live within a library.  
 
