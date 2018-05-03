@@ -84,7 +84,7 @@ Dsply lText;
 *InLR = *On; 
 Return;  
 ```
-**Note: You must be running OS version 7.2 at TR 11 or 7.3 at TR 3. You can look up your system's TR level using the approach described in [this post](http://www.seidengroup.com/2014/08/16/find-technology-refresh-tr-level-ibm-i).
+**Note**: You must be running OS version 7.2 at TR 11 or 7.3 at TR 3. You can look up your system's TR level using the approach described in [this post](http://www.seidengroup.com/2014/08/16/find-technology-refresh-tr-level-ibm-i).
  
 Once we have written our code, we are going to use CRTBNDRPG to create our program object. What makes CRTBNDPGM useful is that it just creates a program object – it’s automating the CRTRPGMOD step. Another way we could have created our program object is by using CRTRPGMOD and then CRTPGM over that module. 
 
@@ -105,7 +105,9 @@ There are lots of variations of RPG syntax. For all the RPG we write, we will be
 
 Notice how in the last lecture, we used `**FREE` – this is a compiler directive. It tells the compiler, we’re going to write our free format code from the start of the line. If we didn’t have that directive, we’d have to start each line at the 8th index (7 spaces, then start the code). If used, `**FREE` must be on the first line and the first 6 characters with nothing following. 
 
-`*InLR = *On` tells the runtime that we’re on the last record. We need this because some elements of legacy RPG are still supported. Without it, the program would keep looping until LR was on. 
+`*InLR = *On` tells the runtime that we’re on the last record. We need this because some elements of legacy RPG are still supported. [Read more about indicator LR here.](https://www.mcpressonline.com/programming/rpg/practical-rpg-activation-groups-and-inlr)
+
+> Setting `*InLR = *On` by itself never ends the program - it simply tells the program to terminate _when_ you return. - JonBoy, code400.com
 
 In RPG, things like IF, DOW, DOU, SELECT, WHEN, DCL-S, etc are all RPG operations. You will always need a space between the operation code and the next value. For good practice, you should surround expressions with brackets.
 
