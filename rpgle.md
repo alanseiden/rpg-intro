@@ -105,7 +105,7 @@ You are now going to call your program using `CALL <programname>`, which should 
 
 There are lots of variations of RPG syntax. For all the RPG we write, we will be using free format. 
 
-Notice how in the last lecture, we used `**FREE` – this is a compiler directive. It tells the compiler, we’re going to write our free format code from the start of the line. If we didn’t have that directive, we’d have to start each line at the 8th index (7 spaces, then start the code). If used, `**FREE` must be on the first line and the first 6 characters with nothing following. 
+Notice how in the last lecture we used `**FREE` – this is a compiler directive. It tells the compiler we’re going to write our free format code from the start of the line. If we didn’t have that directive, we’d have to start each line at the 8th index (8 spaces, then start the code). If used, `**FREE` must be on the first line and in the first 6 characters with nothing following.
 
 `*InLR = *On` tells the runtime that we’re on the last record. We need this because some elements of legacy RPG are still supported. [Read more about indicator LR here.](https://www.mcpressonline.com/programming/rpg/practical-rpg-activation-groups-and-inlr)
 
