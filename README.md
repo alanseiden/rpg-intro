@@ -4,6 +4,7 @@ Introduction to RPG (Report Program Generator). See [this Wikipedia](https://en.
 
 ## Todo
 
+* Intro to RLA
 * Creating commands for programs
 
 ## Contents
