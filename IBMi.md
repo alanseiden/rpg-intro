@@ -1,6 +1,6 @@
 # IBM i Introduction
 
-IBM i is an operating system created by IBM. It has very specific functionality which make it unique: including development environment & database integration.
+IBM i is an operating system created by IBM. It has very specific functionality which makes it unique: including a development environment & database integration.
 
 1. File system (QSYS, library list)
 2. Jobs
@@ -12,7 +12,7 @@ To access an IBM i menu, you will need Access Client Solutions. You can download
 
 ## File System
 
-The primary file system on IBM is called the 'library file system' (also known as the QSYS file system). The file system is made of objects. An object can be a program `*PGM`, database table `*FILE`, library user profile `*USRPRF`, anything. A library (which is also an object `*LIB`) is what holds objects in, but a library cannot hold another library within. Both objects and libraries names can only be a **max of 10 characters**.
+The primary file system on IBM i is called the 'library file system' (also known as the QSYS file system). The file system is made up of objects. An object can be a program (`*PGM`), database table (`*FILE`), library user profile (`*USRPRF`), anything. A library (which is also an object - `*LIB`) is what holds objects in, but a library cannot hold another library within. Both object and library names can only be a **max of 10 characters**.
 
 A simple way to navigate and search for objects on IBM i is by using the `WRKOBJ` command (Work with Objects). Simply put, it takes two parameters:
 
@@ -29,7 +29,7 @@ For example:
 
 ### Library list
 
-The library list plays a vital part when working or developing applications running on IBM i. Each system job has it's own library list. The library list is a similar concept to a path list on other systems. On Windows and Unix, to execute a program without a direct path it would need to be on the path list. That is the same idea on IBM i, but with libraries for objects.
+The library list plays a vital part when working with or developing applications running on IBM i. Each system job has it's own library list. The library list is a similar concept to a path list on other systems. On Windows and Unix, to execute a program without a direct path it would need to be on the path list. That is the same idea on IBM i, but with libraries for objects.
 
 Let's say this is our library list:
 
@@ -56,7 +56,7 @@ Unlike Windows and Unix, IBM i has a concept of jobs instead of processes. All w
 
 Each active job contains at least one thread (the initial thread) and may contain additional secondary threads. Threads are independent units of work. Job attributes are shared among the threads of the job, however threads also have some of their own attributes, such as a call stack.
 
-When you start an interactive session on IBM i, that will have it's own job (known as an interactive job, which usually sits in the `QINTER` subsystem). When you call programs from the command line, they will be run under your job. Each job also gets it's own library list, which can be controlled with a job description object (`*JOBD`)
+When you start an interactive session on IBM i, that will have it's own job (known as an interactive job, which usually sits in the `QINTER` subsystem). When you call programs from the command line, they will be run under that interactive job. Each job also gets it's own library list, which can be controlled with a job description object (`*JOBD`)
 
 A job has lots of characteristics and you can see these by using `WRKJOB` on the command line, which will allow you to work with your interactive job. Optionally, if you want to work with another job, you can pass in the job information as the second parameter.
 
@@ -112,7 +112,7 @@ When developing ILE applications, it's useful to have the job log by your side. 
 
 IBM i runs a version of Db2, named Db2 for i, which is integrated into the operating system. This means that it's simple to work with SQL right away. Any file object (`*FILE`) can be accessed from Db2 for i.
 
-Because of how long IBM i has existing, terminology has changed over time.
+Because of how long IBM i has existed, terminology has changed over time.
 
 
 | Then     | Now    |
@@ -123,7 +123,7 @@ Because of how long IBM i has existing, terminology has changed over time.
 | Record   | Row    |
 | Logical  | View or Index |
 
- A logical file contains no data, but it defines views for one or more physical files. Using DDS (data description specifications) to create either tables/files or logicals is outdated and has been replaced with SQL. This is similar to an SQL view or index.
+ A logical file contains no data, but it defines views for one or more physical files. Using DDS (data description specifications) to create either tables/files or logicals is outdated and has been replaced with SQL - this is similar to an SQL view or index.
 
 * An SQL view is a logical file that never has a key, but is much more powerful than a DDS described logical file, because it can contain everything that is possible with a SELECT statement, except an order by. An SQL view can be specified in an SQL statement, but also with native I/O.
 * An SQL index is a keyed logical file. The query optimizer needs access paths (either in SQL indexes or keyed logical file) to retrieve the data as fast as possible.
@@ -134,7 +134,7 @@ Here is an example of creating a table called `PRODUCTSP` in both DDS and SQL/DD
 
 #### DDS
 
-Note that DDS is also a fixed spacing definition language, meaning there is a limit on column names.
+Note that DDS is a fixed spacing definition language, meaning there is a limit on column names.
 
 ```
      A*
@@ -172,6 +172,6 @@ CREATE TABLE PRODUCTSP (
 
 ### Running SQL statements
 
-The best preffered and free method to run SQL on your system is by using ACS (Access Client Solutions). There is a tool named Run SQL Scripts built in which looks a little bit like this:
+The best preferred and free method to run SQL statements on your system is by using ACS (Access Client Solutions). There is a tool named Run SQL Scripts built in which looks like this:
 
 ![](https://www.itjungle.com/fhg/fhg110116-story01-fig03.png)
