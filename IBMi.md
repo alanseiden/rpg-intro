@@ -175,3 +175,53 @@ CREATE TABLE PRODUCTSP (
 The best preferred and free method to run SQL statements on your system is by using ACS (Access Client Solutions). There is a tool named Run SQL Scripts built in which looks like this:
 
 ![](https://www.itjungle.com/fhg/fhg110116-story01-fig03.png)
+
+## Development Environment
+
+IBM i has something called the Integrated Language Environment (ILE). It's a layer above above the machine code that all programming languages use and is compariable to .NET. Like C#, F# and VB .NET all compile to a .NET executable; ILE RPG, ILE COBOL, ILE C, ILE C++, and ILE CL all compile to a program object which is made up of ILE instructions.
+
+This means that each of those languages can call between each other. ILE offers numerous benefits. Those benefits include binding, modularity, reusable components, common runtime services, coexistence, and a source debugger. Read more about those benefits [here](https://www.ibm.com/support/knowledgecenter/ssw_ibm_i_72/ilec/ileben.htm).
+
+It's worth noting that the version of C available on IBM i is C99. 
+
+### Program Types
+
+There is also some terminology differences compared to developing on other operating systems.
+
+* Programs (`*PGM`) are made up of modules (`*MOD`). You can create programs with a single command.
+* You can also create modules with a single command, but can then statically bind them when creating a program (covered in the RPG course). This is comparable to creating static libraries on Windows and Unix.
+* You can create something called a Service Program (`*SRVPGM`) out of a module, which can then be binded to a program dynamically. This is comparable to creating a dynamic library on Windows or Linux.
+
+### Activation Groups
+
+All ILE programs and service programs are activated within a substructure of a job called an activation group. This substructure contains the resources necessary to run the programs. These resources fall into the following general categories:
+
+* Static program variables
+* Dynamic storage
+* Temporary data management resources
+* Certain types of exception handlers and ending procedures
+
+The separation of these resources among activation groups supports a fundamental concept. That is, the concept that all programs activated within one activation group are developed as one cooperative application.
+
+Development shops may select different activation groups to isolate their programs from other shops' applications running in the same job. When a job starts on IBM i, a default activation group is created for any application to run in by default. But programs can specify an activation group it should run in too.
+
+## Commands
+
+Commands on IBM i are very simple. Commands are a maximum of 10 characters long (because they are a `*CMD` object) and are made up of word abbreviations. For example:
+
+![](https://raw.githubusercontent.com/WorksOfBarry/rpg-intro/master/assets/table1.PNG)
+
+Concatenating the abbreviations can make up commands, which are also pronounceable:
+
+![](https://raw.githubusercontent.com/WorksOfBarry/rpg-intro/master/assets/table2.PNG)
+
+Some of the commands we’ll be using throughout the lectures are the following:
+
+![](https://raw.githubusercontent.com/WorksOfBarry/rpg-intro/master/assets/table3.PNG)
+
+When using commands on the IBM i, if you are unsure of the parameters you are able to prompt the command. You can prompt after you have entered the command and then by pressing F4. This will bring up a list of parameters available for a command. You may also have the option to use F10, which will show more parameters if available. 
+
+If you’re searching for a command, you can type the start of the command followed by an asterisk. For example:
+
+* `CRT*` will show you all commands starting with `CRT`
+* `WRK*` will show you all commands starting with `WRK`
