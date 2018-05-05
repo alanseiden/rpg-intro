@@ -288,7 +288,7 @@ Endfor;
 
 ### Function/procedure definition
 
-* PHP passes parameters by value always.
+* PHP passes parameters by value by default. To pass by reference, see: http://php.net/manual/en/language.references.pass.php
 * RPG passes by reference by default, but will pass by value with the `value` keyword.
 * `*N` in RPG represents 'nothing' - you can optionally put the procedure name (`doDivide`) in its place.
 
