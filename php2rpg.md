@@ -1,7 +1,7 @@
 # php2rpg
 Guide showing you PHP and RPG differences
 
-* RPG is strongly typed.
+* RPG is strongly typed. PHP is weakly typed by default, with optional features for strong typing in PHP 7+.
 * RPG indexes start at 1, where PHP's numeric indexes start at 0. 
 * RPG's array indexes are always numeric; PHP's array indexes can be numeric or string.
 * Variables in PHP start with a Dollar sign. ($)
